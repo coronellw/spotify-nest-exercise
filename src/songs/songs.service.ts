@@ -3,11 +3,18 @@ import type { Song } from "../types/songs";
 
 @Injectable()
 export class SongsService {
-    getSongs(): Array<Song> {
-        return [] as Song[]
+    private readonly songs: Array<Song> = []
+
+    createSong(song: Song): Array<Song> {
+        this.songs.push(song)
+        return this.songs
     }
 
-    getSongById(id: string): Song | undefined {
-        return
+    getSongs(): Array<Song> {
+        return this.songs
+    }
+
+    getSongById(id: number): Song | undefined {
+        return this.songs.find(song => song.id === id)
     }
 }
