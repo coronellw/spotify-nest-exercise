@@ -6,7 +6,7 @@ export class SongsService {
     private readonly songs: Array<Song> = []
 
     createSong(song: Song): Array<Song> {
-        this.songs.push(song)
+        this.songs.push({...song, id: this.songs.length})
         return this.songs
     }
 
@@ -16,5 +16,9 @@ export class SongsService {
 
     getSongById(id: number): Song | undefined {
         return this.songs.find(song => song.id === id)
+    }
+
+    getSongError(customError?: string) {
+        throw new Error(customError)
     }
 }

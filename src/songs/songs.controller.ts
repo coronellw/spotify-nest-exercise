@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { Song } from 'src/types/songs';
 import { CreateSongDTO } from './dto/create-song-dto';
@@ -19,8 +19,15 @@ export class SongsController {
     }
 
     @Get(':id')
-    getSongById(@Param('id') id: string): string{
-        return `looking for song ${id}`
+    getSongById(@Param(
+        'id', 
+        new ParseIntPipe({errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE,})
+    ) id: number): Song {
+        const song = this.songService.getSongById(id)
+        if (!song) {
+            throw new HttpException(`Song with id ${id} was not found`, HttpStatus.NOT_FOUND)
+        }
+        return song
     }
 
     @Put(':id')
@@ -31,5 +38,18 @@ export class SongsController {
     @Delete(':id')
     deleteSong(@Param('id') id: string) {
         return `Deleting song ${id}`
+    }
+
+    @Get('/error')
+    getSongsError() {
+        try {
+            return this.songService.getSongError("Inentional error message")
+        } catch (error) {
+            console.log("Inside getSongs method error ", error)
+            throw new HttpException(
+                `Server Error: ${error}`,
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                { cause: error })
+        }
     }
 }

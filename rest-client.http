@@ -1,4 +1,9 @@
-# get all songs
+GET http://localhost:3000
+
+### song error
+GET http://localhost:3000/songs/error
+
+### get all songs
 GET http://localhost:3000/songs
 
 ### get song by id
@@ -9,7 +14,7 @@ POST http://localhost:3000/songs HTTP/1.1
 content-type: application/json
 
 {
-    "title": "Testing 2",
+    "title": "Testing 1",
     "author": ["The moon"],
     "releaseDate": "2021-11-29",
     "duration": "02:35"
