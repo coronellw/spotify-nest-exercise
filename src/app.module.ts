@@ -5,9 +5,10 @@ import { SongsModule } from './songs/songs.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { databaseConfig } from './db/db.config';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [SongsModule, SequelizeModule.forRoot(databaseConfig)],
+  imports: [SongsModule, SequelizeModule.forRoot(databaseConfig), UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
