@@ -2,40 +2,42 @@ import {
   Controller,
   Delete,
   Param,
+  Query,
   Patch,
   Body,
   Post,
   Get,
-  Query,
 } from '@nestjs/common';
+import { UsersService } from './users.service';
 
 import { Role, User } from 'src/types/user';
 
 @Controller('users')
 export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
   @Get() // GET /users or /users?role=value
   findAll(@Query('role') role?: Role) {
-    console.log(`Filtering by ${role}`);
-    return [];
+    return this.usersService.findAll(role);
   }
 
-  @Get(':id')
+  @Get(':id') // GET /users/:id
   findOne(@Param('id') id: string) {
-    return `Looking for user with id = ${id}`;
+    return this.usersService.findOne(+id);
   }
 
-  @Post()
-  create(@Body() user: User) {
-    return user;
+  @Post() // POST /users
+  create(@Body() user: Omit<User, 'id'>) {
+    return this.usersService.create(user);
   }
 
-  @Patch(':id')
+  @Patch(':id') //PATCH /users/:id
   update(@Param('id') id: string, @Body() userUpdate: Partial<User>) {
-    return { id, ...userUpdate };
+    return this.usersService.update(+id, userUpdate);
   }
 
-  @Delete(':id')
+  @Delete(':id') // DELETE /users/:id
   deleteOne(@Param('id') id: string) {
-    return { id };
+    return this.usersService.deleteOne(+id);
   }
 }
