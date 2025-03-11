@@ -8,6 +8,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { EmployeesModule } from './employees/employees.module';
+import { MyLoggerModule } from './my-logger/my-logger.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { EmployeesModule } from './employees/employees.module';
         limit: 100,
       },
     ]),
+    MyLoggerModule,
   ],
   controllers: [AppController],
   providers: [
