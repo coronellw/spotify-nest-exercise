@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { EmployeesModule } from './employees/employees.module';
 import { MyLoggerModule } from './my-logger/my-logger.module';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { MyLoggerModule } from './my-logger/my-logger.module';
       },
     ]),
     MyLoggerModule,
+    BooksModule,
   ],
   controllers: [AppController],
   providers: [
